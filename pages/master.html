@@ -1,0 +1,85 @@
+﻿<!doctype html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="assets/css/master.css" />
+  <title>Gestion du jeu</title>
+</head>
+<body>
+
+<div id="title"></div>
+<div id="next-state">
+  <div class="arrow-right"></div>
+</div>
+
+<div id="previous-state">
+  <div class="arrow-left"></div>
+</div>
+
+<div id="results"></div>
+
+<div id="image"></div>
+
+
+<br><br>
+
+<!--
+<input type="button" value="Repartir au début" id="reset-game"><br>
+<input type="button" value="Question suivante" id="next-question"><br>
+<input type="button" value="C'était notre dernier mot" id="hold"><br>
+<input type="button" value="Montrer les résultats" id="show-result">
+-->
+
+
+
+
+
+<div id="answers"></div>
+
+
+
+<!-- What an ugly way to code this but no more time ... -->
+<div id="answers-section" style="display: none;">
+  {{#answersFirstRow}}
+    <div class="answer answer-{{letter}}{{#valid}} valid{{/valid}}" data-letter="{{letter}}">
+      <div class="cartridge-left"></div>
+      <div class="cartridge-center">
+        <div class="table">
+          <div class="cartridge-center-inner">
+            <span class="letter"><span class="result"></span>{{letter}} : </span><span class="text">{{text}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="cartridge-right"></div>
+    </div>
+  {{/answersFirstRow}}
+
+  {{#answersSecondRow}}
+    <div class="answer answer-{{letter}}{{#valid}} valid{{/valid}}" data-letter="{{letter}}">
+      <div class="cartridge-left"></div>
+      <div class="cartridge-center">
+        <div class="table">
+          <div class="cartridge-center-inner">
+            <span class="letter"><span class="result"></span>{{letter}} : </span><span class="text">{{text}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="cartridge-right"></div>
+    </div>
+  {{/answersSecondRow}}
+
+</div>
+
+
+
+<script type="text/javascript" src="assets/js/zepto.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/assets/js/mustache.min.js"></script>
+<script type="text/javascript" src="assets/js/master.js"></script>
+
+
+</body>
+</html>
+
+
+

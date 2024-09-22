@@ -1,0 +1,72 @@
+﻿<!doctype html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=480, user-scalable=no">
+  <link rel="stylesheet" href="assets/css/play.css" />
+  <title>Qui veut gagner des millions ? - Inès edition</title>
+</head>
+<body>
+
+<!-- Active pannel showing game state -->
+<div id="display-pannel"></div>
+
+<!-- Game not started -->
+<div id="not-started" style="display: none;">
+  <div class="question-title">Le jeu va commencer !</div><br>
+  <div class="paragraph">Pour jouer, il suffit de taper sur la réponse choisie, qui deviendra jaune. Vous pouvez changer de réponse si vous vous êtes trompé, jusqu'à ce que Florian ait dit "C'est mon dernier mot".</div><br>
+  <div class="paragraph">Votre score vous sera donné à la fin</div><br>
+  <div class="paragraph">Soyons clairs, c'est tout de même assez simple. Même Inès y arriverait.</div>
+</div>
+
+<!-- Question was just asked -->
+<div id="question-asked" style="display: none;">
+  <div class="viewport">
+    <div class="question-title">
+    Q{{question.number}} - {{question.question}}
+    </div>
+
+    {{#question.answers}}
+      <div class="answer answer-{{letter}}{{#valid}} valid{{/valid}}" data-letter="{{letter}}">
+        <div class="cartridge-left"></div>
+        <div class="cartridge-center">
+          <div class="table">
+          <div class="cartridge-center-inner">
+            <span class="letter">{{letter}} : </span><span class="text">{{text}}</span>
+          </div>
+          </div>
+        </div>
+        <div class="cartridge-right"></div>
+      </div>
+    {{/question.answers}}
+  </div>
+</div>
+
+<!-- Hold specific panel -->
+<div id="hold-panel" style="display: none">
+  <div class="overlay">
+  </div>
+  <div class="last-word-message">
+    C'était votre dernier mot, voyons ce que dit Florian!
+  </div>
+</diV>
+
+<!-- End of the game -->
+<div id="game-ended" style="display: none;">
+  <div class="question-title">C'est déjà la fin !</div><br><br>
+
+  <div class="centered-paragraph">
+    Votre score : <span class="your-score">{{score}}</span>/{{maxScore}}<br><br><br>
+    {{message}}
+  </div>
+</div>
+
+<!--<script type="text/javascript" src="/assets/js/jquery-1.11.1.min.js"></script>-->
+<script type="text/javascript" src="/assets/js/zepto.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/assets/js/mustache.min.js"></script>
+<script type="text/javascript" src="/assets/js/play.js"></script>
+
+</body>
+</html>
+

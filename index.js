@@ -1,0 +1,75 @@
+var express = require('express')
+  , app = express()
+  , server = require('http').Server(app)
+  , io = require('socket.io')(server)
+  , game = require('./lib/game')(io)
+  , bodyParser = require('body-parser')
+  ;
+
+app.use(bodyParser.json());
+
+
+// Game master
+app.get('/master', function (req, res) {
+  res.sendFile(process.cwd() + '/pages/master.html');
+});
+
+// Reset game
+app.post('/master/reset-game', game.resetGame);
+app.get('/master/reset-game', game.resetGame);
+
+// Next question
+app.post('/master/next-question', game.beginNextQuestion);
+
+// Hold game
+app.post('/master/hold', game.hold);
+
+// Show question results
+app.post('/master/show-result', game.showResult);
+
+// Go to next state
+app.post('/master/next-state', game.nextState);
+
+// Go to previous state
+app.post('/master/previous-state', game.previousState);
+
+// Get score for question
+app.get('/master/score/:number', game.sendScoreForQuestion);
+
+// Get highest score for the whole game
+app.get('/master/highest-score', game.getHighestScore);
+
+// Question creation page
+app.get('/master/add-question', function (req, res) {
+  res.sendFile(process.cwd() + '/pages/add-question.html');
+});
+
+// Actual question creation
+app.post('/master/add-question', game.addQuestion);
+
+// Play
+app.get('/', function (req, res) {
+  res.sendFile(process.cwd() + '/pages/play.html');
+});
+
+// Get player, create him if he doesn't exist yet
+app.get('/player/:id?', game.getPlayer);
+
+// Submit an answer
+app.post('/answer/:number', game.submitAnswer);
+
+
+// Serve static client-side js and css (should really be done through Nginx but at this scale we don't care)
+app.get('/assets/*', function (req, res) {
+  res.sendFile(process.cwd() + req.url);
+});
+
+
+// Last wall of defense
+process.on('uncaughtException', function (err) {
+  console.log('UNCAUGHT EXCEPTION !!!');
+  console.log(err);
+});
+
+
+server.listen(1504);
